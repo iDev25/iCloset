@@ -2,14 +2,21 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useCloset } from '../context/ClosetContext';
+import FeaturedOutfit from '../components/home/FeaturedOutfit';
+import RecentOutfits from '../components/home/RecentOutfits';
+import { outfits } from '../data/outfits';
 
 const Home = () => {
-  const { clothingItems } = useCloset();
+  const { items } = useCloset();
   
   // Get a few random items for the featured section
-  const featuredItems = clothingItems
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
+  // Make sure items exists before trying to sort it
+  const featuredItems = items && items.length > 0
+    ? [...items].sort(() => 0.5 - Math.random()).slice(0, 3)
+    : [];
+
+  // Use the first outfit from the outfits data as the featured outfit
+  const featuredOutfit = outfits[0];
 
   return (
     <HomeContainer>
@@ -37,6 +44,12 @@ const Home = () => {
           />
         </HeroImageContainer>
       </HeroSection>
+
+      {featuredOutfit && (
+        <FeaturedOutfit outfit={featuredOutfit} />
+      )}
+
+      <RecentOutfits />
 
       <FeaturesSection>
         <SectionTitle>Features</SectionTitle>

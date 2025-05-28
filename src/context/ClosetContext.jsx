@@ -1,146 +1,216 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
+import { outfits as initialOutfitData } from '../data/outfits';
 
-// Sample data for the closet
-const sampleClothingItems = [
+// Sample data for initial closet items
+const initialItems = [
   {
     id: '1',
     name: 'White Button-Down Shirt',
     category: 'tops',
-    subcategory: 'Shirts',
-    color: 'White',
-    brand: 'Brooks Brothers',
-    image: 'https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg',
-    seasons: ['Spring', 'Summer', 'Fall', 'Winter'],
-    occasions: ['Work', 'Casual', 'Semi-formal'],
+    color: 'white',
+    season: ['spring', 'summer', 'fall', 'winter'],
+    image: 'https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     favorite: true,
   },
   {
     id: '2',
     name: 'Blue Jeans',
     category: 'bottoms',
-    subcategory: 'Jeans',
-    color: 'Blue',
-    brand: "Levi's",
-    image: 'https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg',
-    seasons: ['Spring', 'Fall', 'Winter'],
-    occasions: ['Casual'],
-    favorite: true,
+    color: 'blue',
+    season: ['spring', 'fall', 'winter'],
+    image: 'https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    favorite: false,
   },
   {
     id: '3',
-    name: 'Black Leather Jacket',
+    name: 'Black Blazer',
     category: 'outerwear',
-    subcategory: 'Jackets',
-    color: 'Black',
-    brand: 'AllSaints',
-    image: 'https://images.pexels.com/photos/16170/pexels-photo.jpg',
-    seasons: ['Fall', 'Winter'],
-    occasions: ['Casual', 'Night Out'],
-    favorite: false,
+    color: 'black',
+    season: ['fall', 'winter'],
+    image: 'https://images.pexels.com/photos/6626903/pexels-photo-6626903.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    favorite: true,
   },
   {
     id: '4',
     name: 'Brown Leather Boots',
     category: 'shoes',
-    subcategory: 'Boots',
-    color: 'Brown',
-    brand: 'Red Wing',
-    image: 'https://images.pexels.com/photos/267242/pexels-photo-267242.jpeg',
-    seasons: ['Fall', 'Winter'],
-    occasions: ['Casual', 'Outdoor'],
-    favorite: true,
-  },
-  {
-    id: '5',
-    name: 'Silver Watch',
-    category: 'accessories',
-    subcategory: 'Watches',
-    color: 'Silver',
-    brand: 'Seiko',
-    image: 'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg',
-    seasons: ['Spring', 'Summer', 'Fall', 'Winter'],
-    occasions: ['Work', 'Casual', 'Formal'],
+    color: 'brown',
+    season: ['fall', 'winter'],
+    image: 'https://images.pexels.com/photos/267242/pexels-photo-267242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     favorite: false,
   },
   {
-    id: '6',
-    name: 'Navy Blazer',
-    category: 'outerwear',
-    subcategory: 'Blazers',
-    color: 'Navy',
-    brand: 'Ralph Lauren',
-    image: 'https://images.pexels.com/photos/6626903/pexels-photo-6626903.jpeg',
-    seasons: ['Spring', 'Fall'],
-    occasions: ['Work', 'Semi-formal', 'Formal'],
+    id: '5',
+    name: 'Gold Necklace',
+    category: 'accessories',
+    color: 'gold',
+    season: ['spring', 'summer', 'fall', 'winter'],
+    image: 'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     favorite: true,
-  }
+  },
+  {
+    id: '6',
+    name: 'Floral Summer Dress',
+    category: 'dresses',
+    color: 'multicolor',
+    season: ['spring', 'summer'],
+    image: 'https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    favorite: true,
+  },
 ];
 
-// Create the context
+// Sample data for initial outfits
+const initialOutfits = [
+  {
+    id: '1',
+    name: 'Business Casual',
+    items: ['1', '2', '3', '5'],
+    favorite: true,
+    createdAt: new Date('2023-06-15').toISOString(),
+  },
+  {
+    id: '2',
+    name: 'Summer Day Out',
+    items: ['6', '5'],
+    favorite: false,
+    createdAt: new Date('2023-07-20').toISOString(),
+  },
+];
+
 const ClosetContext = createContext();
 
-// Create a provider component
-export const ClosetProvider = ({ children }) => {
-  const [clothingItems, setClothingItems] = useState(sampleClothingItems);
-  const [outfits, setOutfits] = useState([]);
+export function useCloset() {
+  return useContext(ClosetContext);
+}
 
+export function ClosetProvider({ children }) {
+  const [items, setItems] = useState(initialItems);
+  const [outfits, setOutfits] = useState(initialOutfits);
+  
+  // Add outfitHistory for RecentOutfits component
+  const outfitHistory = initialOutfitData.map(outfit => ({
+    ...outfit,
+    created: outfit.created || new Date().toISOString()
+  }));
+  
+  // Add a new item to the closet
+  const addItem = (item) => {
+    const newItem = {
+      ...item,
+      id: Date.now().toString(),
+      favorite: false,
+    };
+    setItems([...items, newItem]);
+    return newItem;
+  };
+  
+  // Update an existing item
+  const updateItem = (id, updatedItem) => {
+    setItems(items.map(item => item.id === id ? { ...item, ...updatedItem } : item));
+  };
+  
+  // Remove an item from the closet
+  const removeItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
+    // Also remove the item from any outfits
+    setOutfits(outfits.map(outfit => ({
+      ...outfit,
+      items: outfit.items.filter(itemId => itemId !== id)
+    })));
+  };
+  
+  // Toggle favorite status of an item
+  const toggleItemFavorite = (id) => {
+    setItems(items.map(item => 
+      item.id === id ? { ...item, favorite: !item.favorite } : item
+    ));
+  };
+  
+  // Create a new outfit
+  const createOutfit = (name, itemIds) => {
+    const newOutfit = {
+      id: Date.now().toString(),
+      name,
+      items: itemIds,
+      favorite: false,
+      createdAt: new Date().toISOString(),
+    };
+    setOutfits([...outfits, newOutfit]);
+    return newOutfit;
+  };
+  
+  // Update an existing outfit
+  const updateOutfit = (id, updatedOutfit) => {
+    setOutfits(outfits.map(outfit => 
+      outfit.id === id ? { ...outfit, ...updatedOutfit } : outfit
+    ));
+  };
+  
+  // Remove an outfit
+  const removeOutfit = (id) => {
+    setOutfits(outfits.filter(outfit => outfit.id !== id));
+  };
+  
+  // Toggle favorite status of an outfit
+  const toggleOutfitFavorite = (id) => {
+    setOutfits(outfits.map(outfit => 
+      outfit.id === id ? { ...outfit, favorite: !outfit.favorite } : outfit
+    ));
+  };
+  
+  // Get an item by ID
+  const getItem = (id) => {
+    return items.find(item => item.id === id);
+  };
+  
+  // Get an outfit by ID
+  const getOutfit = (id) => {
+    return outfits.find(outfit => outfit.id === id);
+  };
+  
+  // Get all favorite items
+  const getFavoriteItems = () => {
+    return items.filter(item => item.favorite);
+  };
+  
+  // Get all favorite outfits
+  const getFavoriteOutfits = () => {
+    return outfits.filter(outfit => outfit.favorite);
+  };
+  
   // Get items by category
   const getItemsByCategory = (category) => {
-    return clothingItems.filter(item => item.category === category);
+    return items.filter(item => item.category === category);
   };
-
-  // Add a new clothing item
-  const addClothingItem = (item) => {
-    setClothingItems([...clothingItems, { ...item, id: Date.now().toString() }]);
+  
+  // Get items by season
+  const getItemsBySeason = (season) => {
+    return items.filter(item => item.season.includes(season));
   };
-
-  // Remove a clothing item
-  const removeClothingItem = (id) => {
-    setClothingItems(clothingItems.filter(item => item.id !== id));
+  
+  const value = {
+    items,
+    outfits,
+    outfitHistory,
+    addItem,
+    updateItem,
+    removeItem,
+    toggleItemFavorite,
+    createOutfit,
+    updateOutfit,
+    removeOutfit,
+    toggleOutfitFavorite,
+    getItem,
+    getOutfit,
+    getFavoriteItems,
+    getFavoriteOutfits,
+    getItemsByCategory,
+    getItemsBySeason,
   };
-
-  // Toggle favorite status
-  const toggleFavorite = (id) => {
-    setClothingItems(
-      clothingItems.map(item => 
-        item.id === id ? { ...item, favorite: !item.favorite } : item
-      )
-    );
-  };
-
-  // Create a new outfit
-  const createOutfit = (outfit) => {
-    setOutfits([...outfits, { ...outfit, id: Date.now().toString() }]);
-  };
-
-  // Get favorite items
-  const getFavoriteItems = () => {
-    return clothingItems.filter(item => item.favorite);
-  };
-
+  
   return (
-    <ClosetContext.Provider
-      value={{
-        clothingItems,
-        outfits,
-        getItemsByCategory,
-        addClothingItem,
-        removeClothingItem,
-        toggleFavorite,
-        createOutfit,
-        getFavoriteItems
-      }}
-    >
+    <ClosetContext.Provider value={value}>
       {children}
     </ClosetContext.Provider>
   );
-};
-
-// Create a custom hook to use the context
-export const useCloset = () => {
-  const context = useContext(ClosetContext);
-  if (!context) {
-    throw new Error('useCloset must be used within a ClosetProvider');
-  }
-  return context;
-};
+}

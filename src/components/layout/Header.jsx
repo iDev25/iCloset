@@ -1,193 +1,166 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { FiMenu, FiX, FiSearch, FiUser } from 'react-icons/fi';
-
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  return (
-    <HeaderContainer>
-      <HeaderContent>
-        <LogoContainer>
-          <Link to="/">
-            <Logo>iCloset</Logo>
-          </Link>
-        </LogoContainer>
-
-        <MobileMenuButton onClick={toggleMenu}>
-          {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </MobileMenuButton>
-
-        <NavContainer $isOpen={isMenuOpen}>
-          <NavLinks>
-            <NavItem $isActive={location.pathname === '/'}>
-              <NavLink to="/" onClick={closeMenu}>Home</NavLink>
-            </NavItem>
-            <NavItem $isActive={location.pathname === '/closet'}>
-              <NavLink to="/closet" onClick={closeMenu}>My Closet</NavLink>
-            </NavItem>
-            <NavItem $isActive={location.pathname === '/outfit-creator'}>
-              <NavLink to="/outfit-creator" onClick={closeMenu}>Create Outfit</NavLink>
-            </NavItem>
-            <NavItem $isActive={location.pathname === '/favorites'}>
-              <NavLink to="/favorites" onClick={closeMenu}>Favorites</NavLink>
-            </NavItem>
-            <NavItem $isActive={location.pathname === '/style-quiz'}>
-              <NavLink to="/style-quiz" onClick={closeMenu}>Style Quiz</NavLink>
-            </NavItem>
-          </NavLinks>
-        </NavContainer>
-
-        <HeaderActions>
-          <ActionButton>
-            <FiSearch size={20} />
-          </ActionButton>
-          <ActionButton>
-            <FiUser size={20} />
-          </ActionButton>
-        </HeaderActions>
-      </HeaderContent>
-    </HeaderContainer>
-  );
-};
+import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
 
 const HeaderContainer = styled.header`
-  background-color: var(--color-light);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
 `;
 
-const HeaderContent = styled.div`
+const Nav = styled.nav`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
 `;
 
-const LogoContainer = styled.div`
-  flex: 1;
-`;
-
-const Logo = styled.h1`
-  font-size: 1.5rem;
+const Logo = styled(Link)`
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
   font-weight: 700;
-  color: var(--color-primary);
-  margin: 0;
+  color: var(--primary-color);
+  text-decoration: none;
 `;
 
-const MobileMenuButton = styled.button`
+const MenuButton = styled.button`
   display: none;
   background: none;
   border: none;
+  font-size: 1.5rem;
+  color: var(--primary-color);
   cursor: pointer;
-  color: var(--color-primary);
-
+  
   @media (max-width: 768px) {
     display: block;
   }
 `;
 
-const NavContainer = styled.nav`
+const NavLinks = styled.div`
   display: flex;
-  align-items: center;
-
+  gap: 2rem;
+  
   @media (max-width: 768px) {
     position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background-color: var(--color-light);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    height: ${props => (props.$isOpen ? 'auto' : '0')};
-    overflow: hidden;
-    transition: height 0.3s ease;
-    display: ${props => (props.$isOpen ? 'flex' : 'none')};
+    top: 0;
+    right: ${props => props.isOpen ? '0' : '-100%'};
+    width: 70%;
+    height: 100vh;
+    background-color: white;
     flex-direction: column;
-    padding: ${props => (props.$isOpen ? '1rem 0' : '0')};
-  }
-`;
-
-const NavLinks = styled.ul`
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
-  }
-`;
-
-const NavItem = styled.li`
-  margin: 0 1rem;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-accent);
-    transform: scaleX(${props => (props.$isActive ? '1' : '0')});
-    transition: transform 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    padding: 0.75rem 0;
-
-    &::after {
-      bottom: 0;
-    }
+    padding: 2rem;
+    z-index: 100;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
   }
 `;
 
 const NavLink = styled(Link)`
-  color: var(--color-text);
+  color: var(--primary-color);
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: var(--color-primary);
+  font-weight: ${props => props.active ? '600' : '400'};
+  position: relative;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    width: ${props => props.active ? '100%' : '0'};
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+  }
+  
+  &:hover:after {
+    width: 100%;
   }
 `;
 
-const HeaderActions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
-
-const ActionButton = styled.button`
+const CloseButton = styled.button`
+  display: none;
   background: none;
   border: none;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   cursor: pointer;
-  color: var(--color-text);
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: var(--color-primary);
+  
+  @media (max-width: 768px) {
+    display: block;
   }
 `;
+
+const Overlay = styled.div`
+  display: ${props => props.isOpen ? 'block' : 'none'};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+`;
+
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+  
+  return (
+    <HeaderContainer>
+      <Nav>
+        <Logo to="/">StyleSync</Logo>
+        
+        <MenuButton onClick={toggleMenu}>
+          <FaBars />
+        </MenuButton>
+        
+        <Overlay isOpen={isMenuOpen} onClick={closeMenu} />
+        
+        <NavLinks isOpen={isMenuOpen}>
+          <CloseButton onClick={closeMenu}>
+            <FaTimes />
+          </CloseButton>
+          
+          <NavLink to="/" active={location.pathname === '/'} onClick={closeMenu}>
+            Home
+          </NavLink>
+          
+          <NavLink to="/closet" active={location.pathname === '/closet'} onClick={closeMenu}>
+            My Closet
+          </NavLink>
+          
+          <NavLink to="/outfit-creator" active={location.pathname === '/outfit-creator'} onClick={closeMenu}>
+            Create Outfit
+          </NavLink>
+          
+          <NavLink to="/favorites" active={location.pathname === '/favorites'} onClick={closeMenu}>
+            Favorites
+          </NavLink>
+          
+          <NavLink to="/history" active={location.pathname === '/history'} onClick={closeMenu}>
+            History
+          </NavLink>
+          
+          <NavLink to="/style-quiz" active={location.pathname === '/style-quiz'} onClick={closeMenu}>
+            Style Quiz
+          </NavLink>
+        </NavLinks>
+      </Nav>
+    </HeaderContainer>
+  );
+}
 
 export default Header;

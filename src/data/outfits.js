@@ -1,332 +1,214 @@
 export const outfits = [
   {
     id: "outfit-1",
-    name: "Classic Work Ensemble",
+    name: "Business Professional",
+    description: "A polished look perfect for important meetings and presentations",
+    occasion: "work",
+    weather: {
+      season: "fall",
+      temperature: 65,
+      conditions: "clear"
+    },
     items: [
       {
         id: "top-1",
         name: "White Silk Blouse",
-        description: "Elegant silk blouse with button-down front",
         category: "tops",
-        colors: ["white"],
-        seasons: ["spring", "summer", "fall"],
-        occasions: ["work", "casual", "formal"],
-        brand: "Burberry",
-        size: "M",
-        price: 195,
-        imageUrl: "https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "bottom-1",
         name: "Black Tailored Trousers",
-        description: "Classic tailored trousers with straight leg",
         category: "bottoms",
-        colors: ["black"],
-        seasons: ["spring", "fall", "winter"],
-        occasions: ["work", "formal"],
-        brand: "Theory",
-        size: "6",
-        price: 275,
-        imageUrl: "https://images.pexels.com/photos/6311622/pexels-photo-6311622.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6311622/pexels-photo-6311622.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+        id: "outerwear-3",
+        name: "Navy Blazer",
+        category: "outerwear",
+        imageUrl: "https://images.pexels.com/photos/6311652/pexels-photo-6311652.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "shoes-1",
         name: "Black Leather Pumps",
-        description: "Classic leather pumps with 3-inch heel",
         category: "shoes",
-        colors: ["black"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["work", "formal", "evening"],
-        brand: "Jimmy Choo",
-        size: "38",
-        price: 595,
-        imageUrl: "https://images.pexels.com/photos/6046235/pexels-photo-6046235.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6046235/pexels-photo-6046235.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
-        id: "accessory-4",
-        name: "Black Leather Tote",
-        description: "Spacious leather tote with interior pockets",
+        id: "accessory-5",
+        name: "Pearl Necklace",
         category: "accessories",
-        colors: ["black"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["work", "casual"],
-        brand: "Cuyana",
-        size: "One Size",
-        price: 195,
-        imageUrl: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=600"
       }
     ],
-    created: "2023-07-15T10:30:00Z",
-    rating: 5,
-    weather: {
-      temperature: 72,
-      condition: "sunny",
-      season: "fall"
-    },
-    occasion: "work"
+    created: "2023-09-15T10:30:00Z",
+    lastWorn: "2023-09-20T08:00:00Z",
+    favorite: true
   },
   {
     id: "outfit-2",
     name: "Weekend Casual",
+    description: "Comfortable yet stylish look for weekend errands and casual outings",
+    occasion: "casual",
+    weather: {
+      season: "spring",
+      temperature: 70,
+      conditions: "partly cloudy"
+    },
     items: [
       {
         id: "top-3",
         name: "Striped Cotton T-Shirt",
-        description: "Classic navy and white striped tee",
         category: "tops",
-        colors: ["blue", "white"],
-        seasons: ["spring", "summer"],
-        occasions: ["casual"],
-        brand: "J.Crew",
-        size: "M",
-        price: 45,
-        imageUrl: "https://images.pexels.com/photos/5384423/pexels-photo-5384423.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/5384423/pexels-photo-5384423.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "bottom-2",
         name: "Dark Wash Skinny Jeans",
-        description: "Flattering dark wash jeans with stretch",
         category: "bottoms",
-        colors: ["blue"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["casual", "date"],
-        brand: "AG Jeans",
-        size: "28",
-        price: 198,
-        imageUrl: "https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "shoes-2",
         name: "White Leather Sneakers",
-        description: "Minimalist white leather sneakers",
         category: "shoes",
-        colors: ["white"],
-        seasons: ["spring", "summer", "fall"],
-        occasions: ["casual"],
-        brand: "Common Projects",
-        size: "39",
-        price: 425,
-        imageUrl: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "accessory-6",
         name: "Tortoiseshell Sunglasses",
-        description: "Oversized sunglasses in tortoiseshell pattern",
         category: "accessories",
-        colors: ["brown"],
-        seasons: ["spring", "summer"],
-        occasions: ["casual", "vacation"],
-        brand: "Celine",
-        size: "One Size",
-        price: 380,
-        imageUrl: "https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600"
       }
     ],
-    created: "2023-07-16T14:45:00Z",
-    rating: 4,
-    weather: {
-      temperature: 78,
-      condition: "partly cloudy",
-      season: "summer"
-    },
-    occasion: "casual"
+    created: "2023-09-10T14:45:00Z",
+    lastWorn: "2023-09-16T11:30:00Z",
+    favorite: false
   },
   {
     id: "outfit-3",
     name: "Evening Elegance",
+    description: "Sophisticated ensemble for dinner dates and evening events",
+    occasion: "evening",
+    weather: {
+      season: "summer",
+      temperature: 75,
+      conditions: "clear"
+    },
     items: [
       {
         id: "dress-1",
         name: "Black Cocktail Dress",
-        description: "Elegant sleeveless cocktail dress with fitted silhouette",
         category: "dresses",
-        colors: ["black"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["formal", "evening", "date"],
-        brand: "Reiss",
-        size: "6",
-        price: 348,
-        imageUrl: "https://images.pexels.com/photos/6311645/pexels-photo-6311645.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6311645/pexels-photo-6311645.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "shoes-1",
         name: "Black Leather Pumps",
-        description: "Classic leather pumps with 3-inch heel",
         category: "shoes",
-        colors: ["black"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["work", "formal", "evening"],
-        brand: "Jimmy Choo",
-        size: "38",
-        price: 595,
-        imageUrl: "https://images.pexels.com/photos/6046235/pexels-photo-6046235.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6046235/pexels-photo-6046235.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "accessory-1",
         name: "Gold Hoop Earrings",
-        description: "Medium-sized gold hoop earrings",
         category: "accessories",
-        colors: ["gold"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["casual", "work", "evening", "date"],
-        brand: "Mejuri",
-        size: "One Size",
-        price: 75,
-        imageUrl: "https://images.pexels.com/photos/1413420/pexels-photo-1413420.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1413420/pexels-photo-1413420.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+        id: "accessory-4",
+        name: "Black Leather Tote",
+        category: "accessories",
+        imageUrl: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600"
       }
     ],
-    created: "2023-07-17T18:15:00Z",
-    rating: 5,
-    weather: {
-      temperature: 65,
-      condition: "clear",
-      season: "fall"
-    },
-    occasion: "evening"
+    created: "2023-09-05T18:20:00Z",
+    lastWorn: "2023-09-18T19:00:00Z",
+    favorite: true
   },
   {
     id: "outfit-4",
-    name: "Summer Vacation",
-    items: [
-      {
-        id: "top-4",
-        name: "Cream Linen Blouse",
-        description: "Lightweight linen blouse with rolled sleeves",
-        category: "tops",
-        colors: ["cream"],
-        seasons: ["spring", "summer"],
-        occasions: ["casual", "vacation"],
-        brand: "Eileen Fisher",
-        size: "L",
-        price: 168,
-        imageUrl: "https://images.pexels.com/photos/6311387/pexels-photo-6311387.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        id: "bottom-4",
-        name: "White Linen Pants",
-        description: "Breezy linen pants with wide leg",
-        category: "bottoms",
-        colors: ["white"],
-        seasons: ["spring", "summer"],
-        occasions: ["casual", "vacation"],
-        brand: "Reformation",
-        size: "M",
-        price: 148,
-        imageUrl: "https://images.pexels.com/photos/6311638/pexels-photo-6311638.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        id: "shoes-3",
-        name: "Tan Leather Sandals",
-        description: "Comfortable leather sandals with ankle strap",
-        category: "shoes",
-        colors: ["tan"],
-        seasons: ["spring", "summer"],
-        occasions: ["casual", "vacation"],
-        brand: "Ancient Greek Sandals",
-        size: "38",
-        price: 235,
-        imageUrl: "https://images.pexels.com/photos/6046183/pexels-photo-6046183.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        id: "accessory-7",
-        name: "Straw Sun Hat",
-        description: "Wide-brimmed straw hat for sun protection",
-        category: "accessories",
-        colors: ["beige"],
-        seasons: ["summer"],
-        occasions: ["vacation", "casual"],
-        brand: "Lack of Color",
-        size: "M",
-        price: 129,
-        imageUrl: "https://images.pexels.com/photos/1071162/pexels-photo-1071162.jpeg?auto=compress&cs=tinysrgb&w=600",
-      }
-    ],
-    created: "2023-07-18T09:20:00Z",
-    rating: 5,
+    name: "Cozy Winter Day",
+    description: "Warm and stylish look for cold winter days",
+    occasion: "casual",
     weather: {
-      temperature: 85,
-      condition: "sunny",
-      season: "summer"
+      season: "winter",
+      temperature: 35,
+      conditions: "snowy"
     },
-    occasion: "vacation"
-  },
-  {
-    id: "outfit-5",
-    name: "Fall Layers",
     items: [
       {
-        id: "top-5",
-        name: "Navy Merino Wool Turtleneck",
-        description: "Soft merino wool turtleneck sweater",
+        id: "top-2",
+        name: "Black Cashmere Sweater",
         category: "tops",
-        colors: ["navy"],
-        seasons: ["fall", "winter"],
-        occasions: ["work", "casual"],
-        brand: "Uniqlo",
-        size: "M",
-        price: 89.90,
-        imageUrl: "https://images.pexels.com/photos/6311159/pexels-photo-6311159.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6311600/pexels-photo-6311600.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "bottom-2",
         name: "Dark Wash Skinny Jeans",
-        description: "Flattering dark wash jeans with stretch",
         category: "bottoms",
-        colors: ["blue"],
-        seasons: ["spring", "summer", "fall", "winter"],
-        occasions: ["casual", "date"],
-        brand: "AG Jeans",
-        size: "28",
-        price: 198,
-        imageUrl: "https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "outerwear-1",
         name: "Camel Wool Coat",
-        description: "Timeless wool coat in luxurious camel color",
         category: "outerwear",
-        colors: ["camel"],
-        seasons: ["fall", "winter"],
-        occasions: ["work", "casual", "formal"],
-        brand: "Sandro",
-        size: "M",
-        price: 695,
-        imageUrl: "https://images.pexels.com/photos/6311650/pexels-photo-6311650.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6311650/pexels-photo-6311650.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "shoes-4",
         name: "Black Ankle Boots",
-        description: "Leather ankle boots with stacked heel",
         category: "shoes",
-        colors: ["black"],
-        seasons: ["fall", "winter"],
-        occasions: ["casual", "work"],
-        brand: "Rag & Bone",
-        size: "39",
-        price: 495,
-        imageUrl: "https://images.pexels.com/photos/6046227/pexels-photo-6046227.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/6046227/pexels-photo-6046227.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
       {
         id: "accessory-3",
         name: "Silk Scarf",
-        description: "Patterned silk scarf in blue and cream",
         category: "accessories",
-        colors: ["blue", "cream"],
-        seasons: ["spring", "fall"],
-        occasions: ["casual", "work"],
-        brand: "Hermès",
-        size: "One Size",
-        price: 395,
-        imageUrl: "https://images.pexels.com/photos/1078973/pexels-photo-1078973.jpeg?auto=compress&cs=tinysrgb&w=600",
+        imageUrl: "https://images.pexels.com/photos/1078973/pexels-photo-1078973.jpeg?auto=compress&cs=tinysrgb&w=600"
       }
     ],
-    created: "2023-07-19T11:10:00Z",
-    rating: 4,
+    created: "2023-08-28T09:15:00Z",
+    lastWorn: "2023-09-12T08:30:00Z",
+    favorite: false
+  },
+  {
+    id: "outfit-5",
+    name: "Summer Vacation",
+    description: "Light and breezy outfit perfect for summer getaways",
+    occasion: "vacation",
     weather: {
-      temperature: 55,
-      condition: "cloudy",
-      season: "fall"
+      season: "summer",
+      temperature: 85,
+      conditions: "sunny"
     },
-    occasion: "casual"
+    items: [
+      {
+        id: "dress-2",
+        name: "Floral Maxi Dress",
+        category: "dresses",
+        imageUrl: "https://images.pexels.com/photos/6311646/pexels-photo-6311646.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+        id: "shoes-3",
+        name: "Tan Leather Sandals",
+        category: "shoes",
+        imageUrl: "https://images.pexels.com/photos/6046183/pexels-photo-6046183.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+        id: "accessory-7",
+        name: "Straw Sun Hat",
+        category: "accessories",
+        imageUrl: "https://images.pexels.com/photos/1071162/pexels-photo-1071162.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+        id: "accessory-6",
+        name: "Tortoiseshell Sunglasses",
+        category: "accessories",
+        imageUrl: "https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600"
+      }
+    ],
+    created: "2023-08-15T16:40:00Z",
+    lastWorn: "2023-09-02T10:00:00Z",
+    favorite: true
   }
 ];

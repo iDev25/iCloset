@@ -1,41 +1,57 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FiClock } from 'react-icons/fi';
-import { useCloset } from '../../context/ClosetContext';
+import { FiArrowRight } from 'react-icons/fi';
+import { outfits } from '../../data/outfits';
 
-const SectionContainer = styled.div`
-  margin-bottom: var(--spacing-xl);
+const RecentOutfitsSection = styled.section`
+  margin-bottom: 5rem;
 `;
 
 const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.5rem;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
+  font-size: 2rem;
+  color: var(--primary-color);
 `;
 
 const ViewAllLink = styled(Link)`
-  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-color);
   font-weight: 500;
+  transition: all 0.3s ease;
   
   &:hover {
-    text-decoration: underline;
+    color: var(--secondary-color);
+    transform: translateX(5px);
+  }
+  
+  svg {
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover svg {
+    transform: translateX(3px);
   }
 `;
 
 const OutfitsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
+  gap: 2rem;
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -43,40 +59,106 @@ const OutfitsGrid = styled.div`
 `;
 
 const OutfitCard = styled(motion.div)`
-  background-color: var(--color-white);
+  background-color: white;
   border-radius: var(--border-radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+  }
 `;
 
-const OutfitHeader = styled.div`
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-gray-200);
+const OutfitImageContainer = styled.div`
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+`;
+
+const OutfitImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  
+  ${OutfitCard}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const OutfitFavorite = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: ${props => props.isFavorite ? 'var(--accent-color)' : 'var(--color-gray-400)'};
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-sm);
+`;
+
+const OutfitDetails = styled.div`
+  padding: 1.5rem;
+`;
+
+const OutfitName = styled.h3`
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+`;
+
+const OutfitMeta = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  font-size: 0.85rem;
+  color: var(--color-gray-600);
+  margin-bottom: 1rem;
 `;
 
-const OutfitTitle = styled.h3`
-  font-size: 1.125rem;
-  margin: 0;
+const OutfitOccasion = styled.span`
+  text-transform: capitalize;
 `;
 
-const OutfitDate = styled.span`
-  font-size: 0.75rem;
-  color: var(--color-gray-500);
+const OutfitSeason = styled.span`
+  text-transform: capitalize;
 `;
 
-const OutfitPreview = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  height: 240px;
+const OutfitItemsPreview = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--color-gray-200);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+  }
 `;
 
 const ItemPreview = styled.div`
-  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
 `;
 
 const ItemImage = styled.img`
@@ -85,155 +167,85 @@ const ItemImage = styled.img`
   object-fit: cover;
 `;
 
-const ItemCategory = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: var(--color-white);
-  padding: 0.25rem;
-  font-size: 0.75rem;
-  text-align: center;
-`;
-
-const OutfitFooter = styled.div`
-  padding: var(--spacing-md);
-  display: flex;
-  justify-content: space-between;
+const OutfitLink = styled(Link)`
+  display: inline-flex;
   align-items: center;
-`;
-
-const OutfitTags = styled.div`
-  display: flex;
-  gap: var(--spacing-xs);
-`;
-
-const OutfitTag = styled.span`
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  background-color: var(--color-gray-200);
-  color: var(--color-secondary);
-`;
-
-const ViewButton = styled(Link)`
-  color: var(--color-accent);
-  font-size: 0.875rem;
+  gap: 0.5rem;
   font-weight: 500;
-  text-decoration: none;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
   
   &:hover {
-    text-decoration: underline;
+    color: var(--secondary-color);
+    transform: translateX(5px);
   }
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: var(--spacing-xl) 0;
-  background-color: var(--color-white);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-md);
-`;
-
-const EmptyStateText = styled.p`
-  margin-bottom: var(--spacing-md);
-  color: var(--color-gray-500);
-`;
-
-const CreateButton = styled(Link)`
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  text-decoration: none;
   
-  &:hover {
-    background-color: var(--color-accent-hover);
+  svg {
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover svg {
+    transform: translateX(3px);
   }
 `;
 
 const RecentOutfits = () => {
-  const { outfitHistory } = useCloset();
-  
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric' 
-    });
-  };
-  
-  // Show only the 3 most recent outfits
-  const recentOutfits = outfitHistory.slice(0, 3);
-  
-  if (recentOutfits.length === 0) {
-    return (
-      <SectionContainer>
-        <SectionHeader>
-          <SectionTitle>
-            <FiClock /> Recent Outfits
-          </SectionTitle>
-        </SectionHeader>
-        
-        <EmptyState>
-          <EmptyStateText>
-            You haven't created any outfits yet.
-          </EmptyStateText>
-          <CreateButton to="/outfit-creator">
-            Create Your First Outfit
-          </CreateButton>
-        </EmptyState>
-      </SectionContainer>
-    );
-  }
+  // Get the 3 most recent outfits
+  const recentOutfits = [...outfits]
+    .sort((a, b) => new Date(b.created) - new Date(a.created))
+    .slice(0, 3);
   
   return (
-    <SectionContainer>
+    <RecentOutfitsSection>
       <SectionHeader>
-        <SectionTitle>
-          <FiClock /> Recent Outfits
-        </SectionTitle>
-        <ViewAllLink to="/history">View All</ViewAllLink>
+        <SectionTitle>Recent Outfits</SectionTitle>
+        <ViewAllLink to="/outfits">
+          View All <FiArrowRight />
+        </ViewAllLink>
       </SectionHeader>
       
       <OutfitsGrid>
-        {recentOutfits.map(outfit => (
-          <OutfitCard
+        {recentOutfits.map((outfit, index) => (
+          <OutfitCard 
             key={outfit.id}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <OutfitHeader>
-              <OutfitTitle>{outfit.name}</OutfitTitle>
-              <OutfitDate>{formatDate(outfit.created)}</OutfitDate>
-            </OutfitHeader>
+            <OutfitImageContainer>
+              <OutfitImage 
+                src={outfit.items[0].imageUrl} 
+                alt={outfit.name} 
+              />
+              <OutfitFavorite isFavorite={outfit.favorite}>
+                ♥
+              </OutfitFavorite>
+            </OutfitImageContainer>
             
-            <OutfitPreview>
-              {outfit.items.slice(0, 4).map((item, index) => (
-                <ItemPreview key={item.id}>
-                  <ItemImage src={item.imageUrl} alt={item.name} />
-                  <ItemCategory>{item.category}</ItemCategory>
-                </ItemPreview>
-              ))}
-            </OutfitPreview>
-            
-            <OutfitFooter>
-              <OutfitTags>
-                <OutfitTag>{outfit.occasion}</OutfitTag>
-                <OutfitTag>{outfit.weather.season}</OutfitTag>
-              </OutfitTags>
+            <OutfitDetails>
+              <OutfitName>{outfit.name}</OutfitName>
               
-              <ViewButton to={`/outfit/${outfit.id}`}>
-                View Details
-              </ViewButton>
-            </OutfitFooter>
+              <OutfitMeta>
+                <OutfitOccasion>{outfit.occasion}</OutfitOccasion>
+                <OutfitSeason>{outfit.weather.season}</OutfitSeason>
+              </OutfitMeta>
+              
+              <OutfitItemsPreview>
+                {outfit.items.map(item => (
+                  <ItemPreview key={item.id}>
+                    <ItemImage src={item.imageUrl} alt={item.name} />
+                  </ItemPreview>
+                ))}
+              </OutfitItemsPreview>
+              
+              <OutfitLink to={`/outfit/${outfit.id}`}>
+                View Details <FiArrowRight />
+              </OutfitLink>
+            </OutfitDetails>
           </OutfitCard>
         ))}
       </OutfitsGrid>
-    </SectionContainer>
+    </RecentOutfitsSection>
   );
 };
 

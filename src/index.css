@@ -1,13 +1,41 @@
 /* Base styles */
 :root {
-  --primary-color: #2c3e50;
-  --secondary-color: #e74c3c;
-  --accent-color: #3498db;
-  --light-color: #ecf0f1;
-  --dark-color: #2c3e50;
+  --primary-color: #1a1a1a;
+  --secondary-color: #c9a77c;
+  --accent-color: #d4af7a;
+  --light-color: #f8f5f1;
+  --dark-color: #1a1a1a;
+  --text-color: #333333;
+  --error-color: #d64545;
+  --success-color: #3e8d63;
+  --warning-color: #e6a23c;
+  --border-radius: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.03), 0 5px 10px rgba(0, 0, 0, 0.05);
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
   --font-heading: 'Cormorant Garamond', serif;
   --font-body: 'Montserrat', sans-serif;
   --transition: all 0.3s ease;
+  --color-white: #ffffff;
+  --color-gray-100: #f7f7f7;
+  --color-gray-200: #e6e6e6;
+  --color-gray-300: #d1d1d1;
+  --color-gray-400: #ababab;
+  --color-gray-500: #8a8a8a;
+  --color-gray-600: #636363;
+  --color-gray-700: #4d4d4d;
+  --color-gray-800: #333333;
+  --color-gray-900: #1a1a1a;
+  --color-accent: #d4af7a;
+  --color-accent-hover: #c9a77c;
 }
 
 * {
@@ -18,9 +46,11 @@
 
 body {
   font-family: var(--font-body);
-  color: var(--dark-color);
+  color: var(--text-color);
   background-color: var(--light-color);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .app {
@@ -31,9 +61,6 @@ body {
 
 main {
   flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
 }
 
@@ -41,6 +68,26 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   margin-bottom: 1rem;
   font-weight: 600;
+  line-height: 1.2;
+  color: var(--primary-color);
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 2rem;
+  letter-spacing: -0.3px;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
 }
 
 a {
@@ -55,24 +102,54 @@ a:hover {
 
 button {
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   background-color: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   font-family: var(--font-body);
+  font-weight: 500;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
   background-color: var(--secondary-color);
 }
 
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 122, 0.4);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(212, 175, 122, 0.2);
+}
+
 /* Utility classes */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 var(--spacing-md);
+  width: 100%;
 }
 
 .text-center {
@@ -80,17 +157,63 @@ button:hover {
 }
 
 .mb-1 {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 .mb-2 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .mt-1 {
-  margin-top: 1rem;
+  margin-top: var(--spacing-md);
 }
 
 .mt-2 {
-  margin-top: 2rem;
+  margin-top: var(--spacing-lg);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-1 {
+  gap: var(--spacing-md);
+}
+
+.gap-2 {
+  gap: var(--spacing-lg);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
 }

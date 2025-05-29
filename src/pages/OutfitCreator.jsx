@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useCloset } from '../context/ClosetContext';
 import { FiSave, FiShare, FiHeart, FiTrash2 } from 'react-icons/fi';
+import { clothingItems } from '../data/clothingItems';
 
 const OutfitCreator = () => {
-  const { clothingItems, getItemsByCategory } = useCloset();
+  // Use clothingItems from imported data instead of from context
+  const { getItemsByCategory } = useCloset();
   const [selectedCategory, setSelectedCategory] = useState('tops');
   const [currentOutfit, setCurrentOutfit] = useState({
     tops: null,
@@ -85,6 +87,11 @@ const OutfitCreator = () => {
     setOutfitName('');
   };
 
+  // Get items by category function to replace context function
+  const getItemsByCategoryLocal = (category) => {
+    return clothingItems.filter(item => item.category === category);
+  };
+
   return (
     <CreatorContainer>
       <CreatorHeader>
@@ -129,7 +136,7 @@ const OutfitCreator = () => {
                       >
                         {currentOutfit[category.id] ? (
                           <OutfitItem>
-                            <OutfitItemImage src={currentOutfit[category.id].image} alt={currentOutfit[category.id].name} />
+                            <OutfitItemImage src={currentOutfit[category.id].imageUrl} alt={currentOutfit[category.id].name} />
                             <OutfitItemName>{currentOutfit[category.id].name}</OutfitItemName>
                             <RemoveButton onClick={() => removeItemFromOutfit(category.id)}>
                               <FiTrash2 size={16} />
@@ -167,7 +174,7 @@ const OutfitCreator = () => {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {getItemsByCategory(selectedCategory).map((item, index) => (
+                  {getItemsByCategoryLocal(selectedCategory).map((item, index) => (
                     <Draggable key={item.id} draggableId={item.id} index={index}>
                       {(provided, snapshot) => (
                         <ItemCard
@@ -177,7 +184,7 @@ const OutfitCreator = () => {
                           $isDragging={snapshot.isDragging}
                           style={provided.draggableProps.style}
                         >
-                          <ItemImage src={item.image} alt={item.name} />
+                          <ItemImage src={item.imageUrl} alt={item.name} />
                           <ItemDetails>
                             <ItemName>{item.name}</ItemName>
                             <ItemBrand>{item.brand}</ItemBrand>
